@@ -1,0 +1,67 @@
+/*
+    Author : RAJON BARDHAN
+    AUST CSE 27th Batch
+    All my programming success are dedicated to my mom , dad , little sister madhobi , teachers , friends and love TANIA SULTANA RIMY
+
+    Problem Name : Binary String ( HackerRank - 101 Hack Aug 2015 )
+    ALGORITHM : Greedy
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define ff first
+#define ss second
+#define mp make_pair
+#define memo(a,b) memset(a,b,sizeof(a))
+#define INF 1e9
+#define EPS 1e-8
+#define PI 3.14159265358979323846
+
+typedef long long ll ;
+typedef unsigned long long ull ;
+
+/* int dx[] = {1,-1,0,0} , dy[] = {0,0,1,-1}; */ // 4 Direction
+/* int dx[] = {1,-1,0,0,1,1,-1,-1} , dy[] = {0,0,1,-1,1,-1,1,-1}; */ // 8 Direction
+/* int dx[] = {1,-1,1,-1,2,2,-2,-2} , dy[] = {2,2,-2,-2,1,-1,1,-1}; */ // Knight Direction
+/* int dx[] = {2,-2,1,1,-1,-1} , dy[] = {0,0,1,-1,1,-1}; */ // Hexagonal Direction
+
+ll n , k , t ;
+char arr[1000000+10];
+queue <int> V[100000+10];
+
+int main()
+{
+    //freopen("input.txt","r",stdin);
+    //freopen("output.txt","w",stdout);
+    scanf("%lld%lld%lld",&n,&k,&t);
+    scanf("%s",&arr);
+    for(int i=0;i<n;i++) if(arr[i]=='1')V[i%k].push(i);
+
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]=='1') 
+        {
+            if(!V[i%k].empty()&&V[i%k].front()==i)V[i%k].pop();
+        }
+
+        if(arr[i]=='0')
+        {
+            if(V[i%k].empty()) continue ;
+            int pos = V[i%k].front();
+
+            int total = (pos-i)/k ;
+
+            if(total<=t)
+            {
+                t-=total;
+                swap(arr[i],arr[pos]);
+                V[i%k].pop();
+            }
+        }
+    }
+
+    puts(arr);
+    return 0;
+}
